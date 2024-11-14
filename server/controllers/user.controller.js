@@ -103,6 +103,15 @@ export async function verifyEmailController(request, response) {
 export async function loginController(request, response) {
   try {
     const { email, password } = request.body;
+
+    if (!email || !password) {
+      return response.status(400).json({
+        message: "Please provide email and password",
+        error: true,
+        success: false,
+      });
+    }
+
     const user = await UserModel.findOne({ email });
 
     if (!user) {
